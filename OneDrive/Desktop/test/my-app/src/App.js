@@ -18,8 +18,15 @@ function App() {
           Learn React
         </a>
       </header>
+      <Button name="Click me" />
     </div>
   );
+}
+
+const Button = props => {
+  return(
+    <button>{props.name}</button>
+  )
 }
 
 export default App;
