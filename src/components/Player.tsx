@@ -3,10 +3,9 @@ import React, { useEffect, useRef, useState } from "react"
 
 interface PlayerProps {
   name: string;
-  symbol: string;
 }
 
-export default function Player({ name, symbol }: PlayerProps) {
+export default function Player({ name }: PlayerProps) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [typeName, setTypeName] = useState<string>('');
   const inputRef = useRef<InputRef>(null);
@@ -34,7 +33,6 @@ export default function Player({ name, symbol }: PlayerProps) {
             ? <span className="player-name">{typeName || name}</span>
             : <Input ref={inputRef} onBlur={handleBlur} placeholder={typeName || name} />
         }
-        <span className="player-symbol">{symbol}</span>
       </span>
       <Button onClick={handleEdit} type='primary'>EDIT</Button>
     </li>
