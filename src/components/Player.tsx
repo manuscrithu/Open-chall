@@ -39,7 +39,7 @@ export default function Player({ name, symbol }: PlayerProps) {
           <Input
             ref={inputRef}
             value={tempName}
-            placeholder={currentName} // ✅ shows current name
+            placeholder={currentName}
             onChange={(e) => setTempName(e.target.value)}
             onBlur={handleBlur}
           />
