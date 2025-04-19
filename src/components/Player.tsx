@@ -1,40 +1,52 @@
 import { Button, Input, InputRef } from "antd"
-import React, { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 interface PlayerProps {
-  name: string;
+  name: string,
+  symbol: string
 }
 
-export default function Player({ name }: PlayerProps) {
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [typeName, setTypeName] = useState<string>('');
-  const inputRef = useRef<InputRef>(null);
-
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    setTypeName(e.target.value);
-    setIsEditing(false);
-  };
+export default function Player({ name, symbol }: PlayerProps) {
+  const [isEditing, setIsEditing] = useState(false)
+  const [currentName, setCurrentName] = useState(name)
+  const [tempName, setTempName] = useState("")
+  const inputRef = useRef<InputRef>(null)
 
   const handleEdit = () => {
-    setIsEditing(true);
-  };
+    setTempName("") // clear input
+    setIsEditing(true)
+  }
+
+  const handleBlur = () => {
+    if (tempName.trim() !== "") {
+      setCurrentName(tempName.trim())
+    }
+    setIsEditing(false)
+  }
 
   useEffect(() => {
     if (isEditing) {
-      inputRef.current?.focus();
+      inputRef.current?.focus()
     }
-  }, [isEditing]);
+  }, [isEditing])
 
   return (
     <li>
-      <span className="player">
-        {
-          !isEditing
-            ? <span className="player-name">{typeName || name}</span>
-            : <Input ref={inputRef} onBlur={handleBlur} placeholder={typeName || name} />
-        }
+      <span className='player'>
+        {!isEditing ? (
+          <span className='player-name'>{currentName}</span>
+        ) : (
+          <Input
+            ref={inputRef}
+            value={tempName}
+            placeholder={currentName} // ✅ shows current name
+            onChange={(e) => setTempName(e.target.value)}
+            onBlur={handleBlur}
+          />
+        )}
       </span>
-      <Button onClick={handleEdit} type='primary'>EDIT</Button>
+      <span>{symbol}</span>
+      <Button onClick={handleEdit}>Edit</Button>
     </li>
-  );
+  )
 }
