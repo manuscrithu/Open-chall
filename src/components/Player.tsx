@@ -3,10 +3,11 @@ import { useEffect, useRef, useState } from "react"
 
 interface PlayerProps {
   name: string,
-  symbol: string
+  symbol: string,
+  isActive: boolean
 }
 
-export default function Player({ name, symbol }: PlayerProps) {
+export default function Player({ name, symbol, isActive }: PlayerProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [currentName, setCurrentName] = useState(name)
   const [tempName, setTempName] = useState("")
@@ -31,7 +32,7 @@ export default function Player({ name, symbol }: PlayerProps) {
   }, [isEditing])
 
   return (
-    <li>
+    <li className={isActive? 'active' : undefined}>
       <span className='player'>
         {!isEditing ? (
           <span className='player-name'>{currentName}</span>

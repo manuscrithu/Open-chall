@@ -1,21 +1,34 @@
-import { useState } from "react"
-
 const initialGameBoard: any = [
     [null, null, null],
     [null, null, null],
     [null, null, null]
 ]
 
-export default function GameBoard() {
-    const [gameBoard, setGameBoard] = useState(initialGameBoard)
+interface GameBoardProps {
+    onSelectSquare: (rowIndex: number, colindex: number) => any,
+    turns: []
+}
 
-    const hanldeSelectSquare = (rowIndex: number, colIndex: number) => {
-        setGameBoard((prevGameBoard: any) => {
-            const updatedGameBoard = [...prevGameBoard.map(((innerArray: any) =>[...innerArray]))];
-            updatedGameBoard[rowIndex][colIndex] = 'X';
-            return updatedGameBoard
-        })
+export default function GameBoard({ onSelectSquare, turns }: GameBoardProps) {
+    let gameBoard = initialGameBoard
+
+    for(const turn of turns) {
+        const { square, player } = turn;
+        const { row, col } = square;
+        gameBoard[row][col] = player
     }
+
+    // const [gameBoard, setGameBoard] = useState(initialGameBoard)
+
+    // const hanldeSelectSquare = (rowIndex: number, colIndex: number) => {
+    //     setGameBoard((prevGameBoard: any) => {
+    //         const updatedGameBoard = [...prevGameBoard.map(((innerArray: any) =>[...innerArray]))];
+    //         updatedGameBoard[rowIndex][colIndex] = activePlayerSymbol;
+    //         return updatedGameBoard
+    //     })
+
+    //     onSelectSquare()
+    // }
 
     return(
         <ol id="game-board">
@@ -23,8 +36,8 @@ export default function GameBoard() {
                 gameBoard.map((row: string|any, rowIndex: any) => <li key={rowIndex}>
                     <ol>
                         {row.map((playerSymbol: string|any, colIndex: any) => <li key={colIndex}><button onClick={
-                            () => hanldeSelectSquare(rowIndex, colIndex)
-                        }>{playerSymbol}</button></li>)}
+                            () => onSelectSquare(rowIndex, colIndex)
+                            }>{playerSymbol}</button></li>)}
                     </ol>
                 </li>)
             }
