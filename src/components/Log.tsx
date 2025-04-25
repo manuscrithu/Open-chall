@@ -1,12 +1,11 @@
-import React from "react";
-
-interface LogProps {
-
-}
-
-const Log: React.FC = () => {
+const Log = ({ turns }: any) => {
     return(
-        <div></div>
+        <ol id="log">
+            {turns.map((turn: any) => <li key={`${turn.square.row}${turn.square.col}`}>
+                {turn.player} selected {turn.square.row}, {turn.square.col}
+                </li>
+            )}
+        </ol>
     )
 }
 
