@@ -1,6 +1,6 @@
 interface GameBoardProps {
     onSelectSquare: (rowIndex: number, colindex: number) => any,
-    board: []
+    board: any[]
 }
 
 export default function GameBoard({ onSelectSquare, board }: GameBoardProps) {
